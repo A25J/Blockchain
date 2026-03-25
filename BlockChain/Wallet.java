@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 class Wallet {
     private String walletId;
     private double balance = 0;
@@ -9,7 +7,6 @@ class Wallet {
         this.balance = initialBalance;
     }
 
-    // Getters
     public String getWalletId() {
         return walletId;
     }
@@ -18,7 +15,6 @@ class Wallet {
         return balance;
     }
 
-    // Balance operations
     public void addBalance(double amount) {
         this.balance += amount;
     }
