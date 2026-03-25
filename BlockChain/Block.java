@@ -21,9 +21,15 @@ public class Block {
         TimeStamp=Instant.now().toString();
         currentHash=applySHA256(blockID+previousHash+TimeStamp+ transactions);
     }
-    public void setTransactions(Transaction [] transactions){
-        this.transactions=transactions;
+
+    public void setTransactions(Transaction[] transactions) {
+        this.transactions = transactions;
     }
+    
+    public String getHash() {
+        return currentHash;
+    }
+
      public static String applySHA256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
