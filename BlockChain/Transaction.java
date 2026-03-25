@@ -11,9 +11,11 @@ public class Transaction {
     String fromWallet;
     String toWallet;
     int amount;
-    public Transaction(String fromWallet, String toWallet,int amount){
-        this.fromWallet=fromWallet;
-        this.toWallet=toWallet;
-        this.amount=amount;
+
+    public Transaction(String fromWallet, String toWallet, int amount) {
+        this.fromWallet = fromWallet;
+        this.toWallet = toWallet;
+        this.amount = amount;
     }
+
 }

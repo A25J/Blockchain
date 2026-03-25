@@ -23,7 +23,12 @@ public class Mempool {
     public Transaction [] getTransactions(){
         return transactions;
     }
-    public int getNbOfTransactions(){
+
+    public int getNbOfTransactions() {
         return count;
+    }
+    
+    public void Reset() {
+        count = 0;
     }
 }
