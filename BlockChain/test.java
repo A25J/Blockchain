@@ -6,9 +6,14 @@ public class test {
         //Create Blocks array
         ArrayList<Block> blockchain = new ArrayList<>();
 
-        //Create 5 wallets
+        //Initialize Variables
+        int numberOfWallets = 5;
+        int NbOfTransactions = 100;
+        int memCapacity = 10;
+
+        //Create wallets
         Wallet[] wallets = new Wallet[5];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numberOfWallets; i++) {
             String wID = generateID();
             wallets[i] = new Wallet(wID, 100);
             System.out.println("Wallet" + (i + 1) + " ID: " + wID);
@@ -22,10 +27,10 @@ public class test {
         System.out.println(currBlock.toString());
 
         //Create Mempool
-        Mempool mem = new Mempool();
+        Mempool mem = new Mempool(memCapacity);
 
         //Create Transactions
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < NbOfTransactions; i++) {
             //get random indices of wallets' array
             int fromWalletIndex = (int) (Math.random() * 5);
             int toWalletIndex = (int) (Math.random() * 5);
@@ -38,23 +43,25 @@ public class test {
             //Random amount between 1 and 5
             int amount = (int) (1 + Math.random() * 5);
             //Create transaction if condition satisfies
-            if (amount <= fromWallet.getBalance()) {  //amount is enough in fromWallet
+            if (amount <= fromWallet.getBalance()) { //amount is enough in fromWallet
                 Transaction t = new Transaction(fromID, toID, amount);
                 fromWallet.subtractBalance(amount);
                 toWallet.addBalance(amount);
-                if (mem.getNbOfTransactions() < 10) { //if there is capacity add Tx to mempool
+                if (mem.getNbOfTransactions() < memCapacity) { //if there is capacity add Tx to mempool
                     mem.addTx(t);
 
                     //Display current mempool content
                     Transaction[] memContent = mem.getTransactions();
                     System.out.println("\nMemPool transactions: ");
                     for (int j = 0; j < memContent.length; j++) {
-                        System.out.println((j+1)+") "+memContent[j].toString());
+                        System.out.println((j + 1) + ") " + memContent[j].toString());
                     }
 
                 } else { //if mempool full add mempool transactions to block, add to blockchain, create new block, reset mempool
+                    //add transactions to block
                     Transaction[] transactions = mem.getTransactions();
                     currBlock.setTransactions(transactions);
+                    System.out.println("\nBlock "+blockID+" filled with transactions");
                     blockID++;
                     prevHash = currBlock.getHash();
                     blockchain.add(currBlock);
@@ -66,18 +73,27 @@ public class test {
                     mem.Reset();
                     //add new tx to mempool
                     mem.addTx(t);
-                    
+
                     //Display current mempool content
                     Transaction[] memContent = mem.getTransactions();
                     System.out.println("\nMemPool transactions: ");
                     for (int j = 0; j < memContent.length; j++) {
-                        System.out.println((j+1)+") "+memContent[j].toString());
+                        System.out.println((j + 1) + ") " + memContent[j].toString());
                     }
                 }
-            }
-            else { //amount isn't enough in fromWallet
+            } else { //amount isn't enough in fromWallet
                 i--; //skip this iteration (try new random wallets)
             }
+        }
+        
+        //Final Block (if mempool is full)
+        if (mem.getNbOfTransactions() == memCapacity) {
+            Transaction[] transactions = mem.getTransactions();
+            currBlock.setTransactions(transactions);
+            System.out.println("\nBlock "+blockID+" filled with transactions");
+            blockID++;
+            prevHash = currBlock.getHash();
+            blockchain.add(currBlock);
         }
     }
 

@@ -8,14 +8,17 @@
  * @author Ruba Hassan
  */
 public class Mempool {
-    private Transaction [] transactions;
+    private Transaction[] transactions;
+    private int capacity;
     private int count;
-    public Mempool(){
-        transactions=new Transaction [10];
+
+    public Mempool(int capacity) {
+        this.capacity = capacity;
+        transactions=new Transaction [capacity];
         count=0;
     }
     public void addTx(Transaction t){
-        if(count<10){
+        if(count<capacity){
             transactions[count]=t;
             count++;
         }
