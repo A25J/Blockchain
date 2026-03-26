@@ -58,7 +58,7 @@ public class Block {
     }
 
     public String toString(){
-        return "Block data: \nBlock id: " + blockID + "\nPrevious Block hash: " +previousHash
-        +"\nCurrent Hash: " +currentHash+"\nTime Stamp: " +TimeStamp;
+        return "\nBlock data{\nBlock id: " + blockID + "\nPrevious Block hash: " +previousHash
+        +"\nCurrent Hash: " +currentHash+"\nTime Stamp: " +TimeStamp+"}";
     }
 }
