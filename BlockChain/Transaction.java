@@ -18,4 +18,8 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String toString() {
+        return "Transaction from " + fromWallet + " to " + toWallet + ". Amount: " + amount + "BTC";
+    }
+
 }

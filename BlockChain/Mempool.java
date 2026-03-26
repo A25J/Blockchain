@@ -20,8 +20,13 @@ public class Mempool {
             count++;
         }
     }
-    public Transaction [] getTransactions(){
-        return transactions;
+
+    public Transaction[] getTransactions() {
+        Transaction[] mempoolTransactions = new Transaction[count];
+        for (int i = 0; i < count; i++) {
+            mempoolTransactions[i] = transactions[i];
+        }
+        return mempoolTransactions;
     }
 
     public int getNbOfTransactions() {

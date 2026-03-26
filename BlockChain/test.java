@@ -44,12 +44,21 @@ public class test {
                 toWallet.addBalance(amount);
                 if (mem.getNbOfTransactions() < 10) { //if there is capacity add Tx to mempool
                     mem.addTx(t);
+
+                    //Display current mempool content
+                    Transaction[] memContent = mem.getTransactions();
+                    System.out.println("\nMemPool transactions: ");
+                    for (int j = 0; j < memContent.length; j++) {
+                        System.out.println((j+1)+") "+memContent[j].toString());
+                    }
+
                 } else { //if mempool full add mempool transactions to block, add to blockchain, create new block, reset mempool
                     Transaction[] transactions = mem.getTransactions();
                     currBlock.setTransactions(transactions);
                     blockID++;
                     prevHash = currBlock.getHash();
                     blockchain.add(currBlock);
+
                     //new block
                     currBlock = new Block(blockID, prevHash);
                     System.out.println("\nNew Block Created: ");
@@ -57,6 +66,13 @@ public class test {
                     mem.Reset();
                     //add new tx to mempool
                     mem.addTx(t);
+                    
+                    //Display current mempool content
+                    Transaction[] memContent = mem.getTransactions();
+                    System.out.println("\nMemPool transactions: ");
+                    for (int j = 0; j < memContent.length; j++) {
+                        System.out.println((j+1)+") "+memContent[j].toString());
+                    }
                 }
             }
             else { //amount isn't enough in fromWallet
