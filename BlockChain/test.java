@@ -12,7 +12,7 @@ public class test {
         int memCapacity = 10;
 
         //Create wallets
-        Wallet[] wallets = new Wallet[5];
+        Wallet[] wallets = new Wallet[numberOfWallets];
         for (int i = 0; i < numberOfWallets; i++) {
             String wID = generateID();
             wallets[i] = new Wallet(wID, 100);
@@ -33,8 +33,8 @@ public class test {
         //Create Transactions for genesis block
         for (int i = 0; i < memCapacity && i < NbOfTransactions; i++) {
             //get random indices of wallets' array
-            int fromWalletIndex = (int) (Math.random() * 5);
-            int toWalletIndex = (int) (Math.random() * 5);
+            int fromWalletIndex = (int) (Math.random() * numberOfWallets);
+            int toWalletIndex = (int) (Math.random() * numberOfWallets);
             //access from and to wallets
             Wallet fromWallet = wallets[fromWalletIndex];
             Wallet toWallet = wallets[toWalletIndex];
@@ -71,8 +71,8 @@ public class test {
         //Create Transactions if nb of transactions > memcapacity (>10) 
         for (int i = memCapacity; i < NbOfTransactions; i++) {
             //get random indices of wallets' array
-            int fromWalletIndex = (int) (Math.random() * 5);
-            int toWalletIndex = (int) (Math.random() * 5);
+            int fromWalletIndex = (int) (Math.random() * numberOfWallets);
+            int toWalletIndex = (int) (Math.random() * numberOfWallets);
             //access from and to wallets
             Wallet fromWallet = wallets[fromWalletIndex];
             Wallet toWallet = wallets[toWalletIndex];
