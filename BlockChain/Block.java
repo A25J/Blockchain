@@ -8,13 +8,14 @@
  * @author Ruba Hassan
  */
 import java.time.Instant;
+import java.util.ArrayList;
 import java.security.MessageDigest;
 public class Block {
     int blockID;
     String currentHash;
     String previousHash;
     String TimeStamp;
-    Transaction [] transactions;
+    ArrayList <Transaction> transactions;
     public Block(int id,  String pHash){
         blockID=id;
         previousHash=pHash;
@@ -22,8 +23,12 @@ public class Block {
         currentHash=applySHA256(blockID+previousHash+TimeStamp+ transactions);
     }
 
-    public void setTransactions(Transaction[] transactions) {
+    public void setTransactions(ArrayList<Transaction> transactions) {
         this.transactions = transactions;
+    }
+    
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
     
     public String getHash() {

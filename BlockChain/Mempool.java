@@ -3,40 +3,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.util.ArrayList;
+
 /**
  *
- * @author Ruba Hassan
+ * @author Ruba Hassan & Alaa Janbieh
  */
 public class Mempool {
-    private Transaction[] transactions;
+    private ArrayList <Transaction> transactions;
     private int capacity;
-    private int count;
 
     public Mempool(int capacity) {
         this.capacity = capacity;
-        transactions=new Transaction [capacity];
-        count=0;
-    }
-    public void addTx(Transaction t){
-        if(count<capacity){
-            transactions[count]=t;
-            count++;
-        }
+        transactions=new ArrayList<Transaction>();
     }
 
-    public Transaction[] getTransactions() {
-        Transaction[] mempoolTransactions = new Transaction[count];
-        for (int i = 0; i < count; i++) {
-            mempoolTransactions[i] = transactions[i];
-        }
-        return mempoolTransactions;
+    public void addTx(Transaction t) {
+        if (transactions.size()<capacity)
+            transactions.add(t);
+    }
+
+    public ArrayList <Transaction> getTransactions() {
+        return transactions;
     }
 
     public int getNbOfTransactions() {
-        return count;
+        return transactions.size();
     }
     
     public void Reset() {
-        count = 0;
+        transactions.clear();
     }
 }

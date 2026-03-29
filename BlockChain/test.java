@@ -8,7 +8,7 @@ public class test {
 
         //Initialize Variables
         int numberOfWallets = 5;
-        int NbOfTransactions = 100;
+        int NbOfTransactions = 105;
         int memCapacity = 10;
 
         //Create wallets
@@ -28,48 +28,10 @@ public class test {
         System.out.println(currBlock.toString());
 
         //Create Mempool
-        Mempool mem = new Mempool(memCapacity);
+        Mempool mem = new Mempool(memCapacity);        
 
-        //Create Transactions for genesis block
-        for (int i = 0; i < memCapacity && i < NbOfTransactions; i++) {
-            //get random indices of wallets' array
-            int fromWalletIndex = (int) (Math.random() * numberOfWallets);
-            int toWalletIndex = (int) (Math.random() * numberOfWallets);
-            //access from and to wallets
-            Wallet fromWallet = wallets[fromWalletIndex];
-            Wallet toWallet = wallets[toWalletIndex];
-            //get IDs
-            String fromID = fromWallet.getWalletId();
-            String toID = toWallet.getWalletId();
-            //Random amount between 1 and 5
-            int amount = (int) (1 + Math.random() * 5);
-            if (amount <= fromWallet.getBalance()) { //amount is enough in fromWallet
-                Transaction t = new Transaction(fromID, toID, amount);
-                fromWallet.subtractBalance(amount);
-                toWallet.addBalance(amount);
-                //add Tx to mempool
-                mem.addTx(t);
-
-                //Display current mempool content
-                Transaction[] memContent = mem.getTransactions();
-                System.out.println("\nMemPool transactions: ");
-                for (int j = 0; j < memContent.length; j++) {
-                    System.out.println((j + 1) + ") " + memContent[j].toString());
-                }
-            } else { //amount not enough
-                i--;
-            }
-        }
-        if (mem.getNbOfTransactions() == memCapacity) {
-            Transaction[] transactions = mem.getTransactions();
-            currBlock.setTransactions(transactions);
-            System.out.println("\nGenesis Block "+blockID+" filled.");
-            mem.Reset();
-        }
-        
-
-        //Create Transactions if nb of transactions > memcapacity (>10) 
-        for (int i = memCapacity; i < NbOfTransactions; i++) {
+        //Create Transactions randomly and add to mempool 
+        for (int i = 0; i < NbOfTransactions; i++) {
             //get random indices of wallets' array
             int fromWalletIndex = (int) (Math.random() * numberOfWallets);
             int toWalletIndex = (int) (Math.random() * numberOfWallets);
@@ -90,10 +52,10 @@ public class test {
                     mem.addTx(t);
 
                     //Display current mempool content
-                    Transaction[] memContent = mem.getTransactions();
+                    ArrayList <Transaction> memContent = mem.getTransactions();
                     System.out.println("\nMemPool transactions: ");
-                    for (int j = 0; j < memContent.length; j++) {
-                        System.out.println((j + 1) + ") " + memContent[j].toString());
+                    for (int j = 0; j < memContent.size(); j++) {
+                        System.out.println((j + 1) + ") " + memContent.get(j).toString());
                     }
 
                 } else { //if mempool full, create new block, add mempool transactions to new block, add to block chain
@@ -106,7 +68,7 @@ public class test {
                     System.out.println(currBlock.toString());
 
                     //fill with mempool transactions
-                    Transaction[] transactions = mem.getTransactions();
+                    ArrayList <Transaction> transactions = mem.getTransactions();
                     currBlock.setTransactions(transactions);
                     System.out.println("\nBlock " + blockID + " filled with transactions");
                     //add to blockchain
@@ -118,10 +80,10 @@ public class test {
                     mem.addTx(t);
 
                     //Display current mempool content
-                    Transaction[] memContent = mem.getTransactions();
+                    ArrayList <Transaction> memContent = mem.getTransactions();
                     System.out.println("\nMemPool transactions: ");
-                    for (int j = 0; j < memContent.length; j++) {
-                        System.out.println((j + 1) + ") " + memContent[j].toString());
+                    for (int j = 0; j < memContent.size(); j++) {
+                        System.out.println((j + 1) + ") " + memContent.get(j).toString());
                     }
                 }
             } else { //amount isn't enough in fromWallet
@@ -130,7 +92,7 @@ public class test {
         }
         
         //Final Block for remaining transactions
-        if (mem.getNbOfTransactions()>0) { //there are transactions left in mempool
+        if (!mem.getTransactions().isEmpty()) { //there are transactions left in mempool
             prevHash = currBlock.getHash();
             blockID++;
             currBlock = new Block(blockID, prevHash);
@@ -140,7 +102,7 @@ public class test {
             System.out.println(currBlock.toString());
 
             //fill with mempool transactions
-            Transaction[] transactions = mem.getTransactions();
+            ArrayList <Transaction> transactions = mem.getTransactions();
             currBlock.setTransactions(transactions);
             System.out.println("\nBlock " + blockID + " filled with "+mem.getNbOfTransactions()+" trasactions");
             //add to blockchain
