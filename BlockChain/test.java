@@ -8,7 +8,7 @@ public class test {
 
         //Initialize Variables
         int numberOfWallets = 5;
-        int NbOfTransactions = 105;
+        int NbOfTransactions = 100;
         int memCapacity = 10;
 
         //Create wallets
