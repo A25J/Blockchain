@@ -19,7 +19,7 @@ public class Transaction {
     }
 
     public String toString() {
-        return "Transaction from " + fromWallet + " to " + toWallet + ". Amount: " + amount + "BTC";
+        return "Transaction from " + fromWallet + " to " + toWallet + ". Amount: " + amount + " $";
     }
 
 }

@@ -129,20 +129,20 @@ public class test {
             }
         }
         
-        //Final Block (if mempool is full)
-        if (mem.getNbOfTransactions() == memCapacity) {
+        //Final Block for remaining transactions
+        if (mem.getNbOfTransactions()>0) { //there are transactions left in mempool
             prevHash = currBlock.getHash();
             blockID++;
             currBlock = new Block(blockID, prevHash);
 
             //create new block
-            System.out.println("\nNew Block Created: ");
+            System.out.println("\nFinal Block Created: ");
             System.out.println(currBlock.toString());
 
             //fill with mempool transactions
             Transaction[] transactions = mem.getTransactions();
             currBlock.setTransactions(transactions);
-            System.out.println("\nBlock " + blockID + " filled with transactions");
+            System.out.println("\nBlock " + blockID + " filled with "+mem.getNbOfTransactions()+" trasactions");
             //add to blockchain
             blockchain.add(currBlock);
 
